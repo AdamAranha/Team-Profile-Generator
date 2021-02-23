@@ -3,6 +3,11 @@ const Engineer = require('./lib/Engineer')
 const Intern = require('./lib/Intern')
 const Manager = require('./lib/Manager')
 
+const arrayEng = []
+const arrayInt = []
+const arrayMan = []
+
+
 
 
 async function getManagerInfo() {
@@ -36,14 +41,9 @@ async function getManagerInfo() {
     )
 
     console.log(respMan)
-    let newArray = []
-    function createObj(name) {
-        newArray.push(name = new Manager(respMan.managerName, respMan.managerID, respMan.managerEmail, respMan.managerOfficeNo))
-    }
-    createObj(respMan.managerName)
-    // const tempName = new Manager(respMan.managerName, respMan.managerID, respMan.managerEmail, respMan.managerOfficeNo)
-    // console.log(tempName)
-    console.log(newArray)
+    // Arrow function that creates object using the Manager class, names it using the manager's name, and fills it with the user submitted information
+    const createObj = name => { arrayMan.push(name = new Manager(respMan.managerName, respMan.managerID, respMan.managerEmail, respMan.managerOfficeNo)) };
+    createObj(respMan.managerName);
 
     encore()
 }
@@ -78,6 +78,10 @@ async function getInternInfo() {
         ]
     )
     console.log(respIntern)
+    // Arrow function that creates object using the Intern class, names it using the intern's name, and fills it with the user submitted information
+    const createObj = name => { arrayInt.push(name = new Intern(respIntern.internName, respIntern.internID, respIntern.internEmail, respIntern.internSchool)) };
+    createObj(respIntern.internName);
+
     encore()
 }
 
@@ -111,6 +115,13 @@ async function getEngineerInfo() {
         ]
     )
     console.log(respEng)
+    // Arrow function that creates object using the Manager class, names it using the managers name, and fills it with the user submitted information
+    const createObj = name => {
+        arrayEng.push(name = new Engineer(respEng.engineerName, respEng.engineerID, respEng.engineerEmail, respEng.engineerGitHub
+        ))
+    };
+    createObj(respEng.engineerName);
+
     encore()
 }
 
@@ -137,7 +148,8 @@ async function encore() {
             break;
 
         case ('No More Members'):
-            console.log('No More Members')
+            console.log('Positions filled')
+            console.log(arrayMan)
             break;
     }
 }
