@@ -1,11 +1,17 @@
 const inquirer = require('inquirer')
-const Engineer = require('./lib/Engineer')
-const Intern = require('./lib/Intern')
-const Manager = require('./lib/Manager')
+const fs = require('fs')
+const engineer = require('./lib/Engineer')
+const intern = require('./lib/Intern')
+const manager = require('./lib/Manager')
+const renderBender = require('./lib/htmlRenderer')
 
 const arrayEng = []
 const arrayInt = []
 const arrayMan = []
+
+var htmlEng = ''
+var htmlInt = ''
+var htmlMan = ''
 
 
 
@@ -42,7 +48,7 @@ async function getManagerInfo() {
 
     console.log(respMan)
     // Arrow function that creates object using the Manager class, names it using the manager's name, and fills it with the user submitted information
-    const createObj = name => { arrayMan.push(name = new Manager(respMan.managerName, respMan.managerID, respMan.managerEmail, respMan.managerOfficeNo)) };
+    const createObj = name => { arrayMan.push(name = new manager.Manager(respMan.managerName, respMan.managerID, respMan.managerEmail, respMan.managerOfficeNo)) };
     createObj(respMan.managerName);
 
     encore()
@@ -79,7 +85,9 @@ async function getInternInfo() {
     )
     console.log(respIntern)
     // Arrow function that creates object using the Intern class, names it using the intern's name, and fills it with the user submitted information
-    const createObj = name => { arrayInt.push(name = new Intern(respIntern.internName, respIntern.internID, respIntern.internEmail, respIntern.internSchool)) };
+    const createObj = name => {
+        arrayInt.push(name = new intern.Intern(respIntern.internName, respIntern.internID, respIntern.internEmail, respIntern.internSchool))
+    };
     createObj(respIntern.internName);
 
     encore()
@@ -117,7 +125,7 @@ async function getEngineerInfo() {
     console.log(respEng)
     // Arrow function that creates object using the Manager class, names it using the managers name, and fills it with the user submitted information
     const createObj = name => {
-        arrayEng.push(name = new Engineer(respEng.engineerName, respEng.engineerID, respEng.engineerEmail, respEng.engineerGitHub
+        arrayEng.push(name = new engineer.Engineer(respEng.engineerName, respEng.engineerID, respEng.engineerEmail, respEng.engineerGitHub
         ))
     };
     createObj(respEng.engineerName);
@@ -138,20 +146,42 @@ async function encore() {
 
     switch (respEncore.nextChoice) {
         case ('Engineer'):
-            console.log('Adding and Engineer')
+            console.log('Adding an Engineer')
             getEngineerInfo()
             break;
 
         case ('Intern'):
-            console.log('Adding and Intern')
+            console.log('Adding an Intern')
             getInternInfo()
             break;
 
         case ('No More Members'):
             console.log('Positions filled')
-            console.log(arrayMan)
+            console.log(arrayMan, arrayEng, arrayInt)
+
+            generateHTML()
             break;
     }
 }
+
+function generateHTML() {
+
+    for (let i = 0; i < arrayEng.length; i++) {
+        htmlEng = engineer.generateEngineer(arrayEng[i].name, arrayEng[i].email, arrayEng[i].id, arrayEng[i].gitHub)
+        console.log(htmlEng)
+    }
+    for (let i = 0; i < arrayInt.length; i++) {
+        htmlInt = intern.generateIntern(arrayInt[i].name, arrayInt[i].email, arrayInt[i].id, arrayInt[i].school)
+        console.log(htmlEng)
+    }
+    for (let i = 0; i < arrayMan.length; i++) {
+        htmlMan = manager.generateManager(arrayMan[i].name, arrayMan[i].email, arrayMan[i].id, arrayMan[i].gitHub)
+        console.log(htmlEng)
+    }
+    const output = renderBender(htmlEng, htmlInt, htmlMan)
+    fs.writeFileSync('index.html', output);
+
+}
+
 
 getManagerInfo()
