@@ -10,6 +10,8 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+const employees = []
+
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
@@ -33,3 +35,145 @@ const render = require("./lib/htmlRenderer");
 // for further information. Be sure to test out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work! ```
+
+async function getManagerInfo() {
+    const response = await inquirer.prompt(
+        [
+            {
+                type: 'input',
+                message: `Please enter the team manager's name`,
+                name: 'name'
+
+            },
+
+            {
+                type: 'input',
+                message: `Please enter the team manager's employee ID`,
+                name: 'id'
+            },
+
+            {
+                type: 'input',
+                message: `Please enter the team manager's email address`,
+                name: 'email'
+            },
+
+            {
+                type: 'input',
+                message: `Please enter the team manager's office number`,
+                name: 'officeNumber'
+            }
+        ]
+    )
+
+    console.log(response)
+    const createObj = (name, email, id, unique) => { employees.push(name = new Manager(name, id, email, unique)) }
+    createObj(response.name, response.id, response.email, response.officeNumber);
+    encore()
+}
+
+async function getInternInfo() {
+    const response = await inquirer.prompt(
+        [
+            {
+                type: 'input',
+                message: `Please enter this Intern's name`,
+                name: 'name'
+
+            },
+
+            {
+                type: 'input',
+                message: `Please enter the Intern's employee ID`,
+                name: 'id'
+            },
+
+            {
+                type: 'input',
+                message: `Please enter the Intern's email address`,
+                name: 'email'
+            },
+
+            {
+                type: 'input',
+                message: `What school did this Intern go to?`,
+                name: 'school'
+            }
+        ]
+    )
+    console.log(response)
+    const createObj = (name, email, id, unique) => { employees.push(name = new Intern(name, id, email, unique)) }
+    createObj(response.name, response.id, response.email, response.school);
+    encore()
+}
+
+async function getEngineerInfo() {
+    const response = await inquirer.prompt(
+        [
+            {
+                type: 'input',
+                message: `Please enter the Engineer's name`,
+                name: 'name'
+
+            },
+
+            {
+                type: 'input',
+                message: `Please enter the Engineer's employee ID`,
+                name: 'id'
+            },
+
+            {
+                type: 'input',
+                message: `Please enter the Engineer's email address`,
+                name: 'email'
+            },
+
+            {
+                type: 'input',
+                message: `Please enter the Engineer's GitHub Username`,
+                name: 'github'
+            }
+        ]
+    )
+    console.log(response)
+    const createObj = (name, email, id, unique) => { employees.push(name = new Engineer(name, id, email, unique)) }
+    createObj(response.name, response.id, response.email, response.github);
+    encore()
+}
+
+async function encore() {
+    const response = await inquirer.prompt(
+        {
+            type: 'list',
+            message: `Would you like to add another member to the team`,
+            choices: ['Engineer', 'Intern', 'No More Members'],
+            name: 'nextChoice'
+        }
+    )
+    console.log(response)
+
+    switch (response.nextChoice) {
+        case ('Engineer'):
+            console.log('Adding an Engineer')
+            getEngineerInfo()
+            break;
+
+        case ('Intern'):
+            console.log('Adding an Intern')
+            getInternInfo()
+            break;
+
+        case ('No More Members'):
+            console.log('Positions filled')
+            console.log(employees)
+            const output = render(employees)
+            fs.writeFileSync('index.html', output)
+
+            break;
+    }
+}
+
+
+
+getManagerInfo()
