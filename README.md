@@ -33,4 +33,4 @@ Jest testing is included for this program. Test suites are located in the test f
 You are using the MIT license
 
 
-Screenshot:![Screenshot](Assets\TeamProfileGenerator.PNG)
+Screenshot:![Screenshot](Assets/TeamProfileGenerator.PNG)
