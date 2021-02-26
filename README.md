@@ -34,3 +34,5 @@ You are using the MIT license
 
 
 Screenshot:![Screenshot](Assets/TeamProfileGenerator.PNG)
+
+[Video Walkthrough](https://drive.google.com/file/d/1P09VQDc0zIAiyxsmxg-Hj0aGqB3wTvbt/view?usp=sharing)

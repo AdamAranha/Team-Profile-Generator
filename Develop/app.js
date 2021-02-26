@@ -67,7 +67,7 @@ async function getManagerInfo() {
     )
 
     console.log(response)
-    const createObj = (name, email, id, unique) => { employees.push(name = new Manager(name, id, email, unique)) }
+    const createObj = (name, id, email, unique) => { employees.push(name = new Manager(name, id, email, unique)) }
     createObj(response.name, response.id, response.email, response.officeNumber);
     encore()
 }
@@ -102,7 +102,7 @@ async function getInternInfo() {
         ]
     )
     console.log(response)
-    const createObj = (name, email, id, unique) => { employees.push(name = new Intern(name, id, email, unique)) }
+    const createObj = (name, id, email, unique) => { employees.push(name = new Intern(name, id, email, unique)) }
     createObj(response.name, response.id, response.email, response.school);
     encore()
 }
@@ -137,7 +137,7 @@ async function getEngineerInfo() {
         ]
     )
     console.log(response)
-    const createObj = (name, email, id, unique) => { employees.push(name = new Engineer(name, id, email, unique)) }
+    const createObj = (name, id, email, unique) => { employees.push(name = new Engineer(name, id, email, unique)) }
     createObj(response.name, response.id, response.email, response.github);
     encore()
 }
